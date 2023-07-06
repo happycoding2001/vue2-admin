@@ -6,7 +6,7 @@
     </el-radio-group> -->
     <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
         <h3>通用后台管理</h3>
-        <el-menu-item v-for="item in noChildren" :key="item.name" :index="item.name">
+        <el-menu-item @click="clickMenu(item)" v-for="item in noChildren" :key="item.name" :index="item.name">
             <i :class="`el-icon-${item.icon}`"></i>
             <span slot="title">{{item.label}}</span>
         </el-menu-item>
@@ -16,7 +16,7 @@
                 <span slot="title">{{item.label}}</span>
             </template>
             <el-menu-item-group>
-                <el-menu-item v-for="subItem in item.children" :index="item.url">{{subItem.label}}</el-menu-item>
+                <el-menu-item  @click="clickMenu(subItem)"  v-for="subItem in item.children" :index="item.url">{{subItem.label}}</el-menu-item>
             </el-menu-item-group>
         </el-submenu>
 
@@ -90,6 +90,9 @@ export default {
         };
     },
     methods: {
+        clickMenu({path}){
+            this.$router.push({path},()=>{})
+        },
         handleOpen(key, keyPath) {
             console.log(key, keyPath);
         },

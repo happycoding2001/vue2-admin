@@ -7,13 +7,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'index',
-    redirect:'/main',
-    component: HomeView
-  },
-  {
-    path: '/main',
     name: 'main',
+    redirect:'/home',
     component: () => import(/* webpackChunkName: "about" */ '../views/main.vue'),
     children:[
       {
@@ -25,6 +20,21 @@ const routes = [
         path: 'user',
         name: 'user',
         component: () => import(/* webpackChunkName: "about" */ '../views/user.vue')
+      },
+      {
+        path: 'mall',
+        name: 'mall',
+        component: () => import(/* webpackChunkName: "about" */ '../views/mall.vue')
+      },
+      {
+        path: 'page1',
+        name: 'pageOne',
+        component: () => import(/* webpackChunkName: "about" */ '../views/pageOne.vue')
+      },
+      {
+        path: 'page2',
+        name: 'pageTwo',
+        component: () => import(/* webpackChunkName: "about" */ '../views/pageTwo.vue')
       },
     ]
   },
