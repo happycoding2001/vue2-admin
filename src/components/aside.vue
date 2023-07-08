@@ -5,7 +5,7 @@
         <el-radio-button :label="true">收起</el-radio-button>
     </el-radio-group> -->
     <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-        <h3>通用后台管理</h3>
+        <h3>{{isCollapse? '后台' :'通用后台管理'}}</h3>
         <el-menu-item @click="clickMenu(item)" v-for="item in noChildren" :key="item.name" :index="item.name">
             <i :class="`el-icon-${item.icon}`"></i>
             <span slot="title">{{item.label}}</span>
@@ -30,6 +30,7 @@
     min-height: 400px;
 }
 .el-menu{
+    border-right: none;
     height: 100vh;
     h3{
         color:#fff;
