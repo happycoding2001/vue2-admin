@@ -24,6 +24,7 @@
 </template>
 
 <script>
+// Home -> home 随便写点注释，不然提交没反应
 export default {
     name: '',
     data() {
