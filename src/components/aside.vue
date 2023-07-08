@@ -107,7 +107,7 @@ export default {
             return this.menuData.filter(item => item.children)
         },
         isCollapse(){
-            return this.$store.state.tab.isCollapse
+            return this.$store.state.tabs.isCollapse
         }
     }
 }
