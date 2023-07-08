@@ -45,7 +45,6 @@
 export default {
     data() {
         return {
-            isCollapse: false,
             menuData: [{
                     path: '/',
                     name: 'home',
@@ -98,7 +97,7 @@ export default {
         },
         handleClose(key, keyPath) {
             console.log(key, keyPath);
-        }
+        },
     },
     computed: {
         noChildren() {
@@ -106,6 +105,9 @@ export default {
         },
         hasChildren() {
             return this.menuData.filter(item => item.children)
+        },
+        isCollapse(){
+            return this.$store.state.tab.isCollapse
         }
     }
 }

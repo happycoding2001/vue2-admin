@@ -1,7 +1,7 @@
 <template>
 <div class="header-container">
     <div class="l-content">
-        <el-button icon="el-icon-menu" size="mini"></el-button>
+        <el-button @click="handelMenu" icon="el-icon-menu" size="mini"></el-button>
         <!-- 面包屑 -->
         <span class="text">首页</span>
     </div>
@@ -27,13 +27,16 @@ export default {
 
         };
     },
+    
 
     mounted() {
 
     },
 
     methods: {
-
+        handelMenu(){
+            this.$store.commit('collapseMenu')
+        }
     },
 };
 </script>
