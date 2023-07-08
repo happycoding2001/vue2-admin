@@ -10,7 +10,7 @@
 </style>
 
 <style>
-html,body{
+html,body,p{
   margin: 0;
   padding: 0;
 }
