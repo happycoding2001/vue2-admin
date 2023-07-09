@@ -35,6 +35,7 @@
             </div>
             <el-card style="height: 280px;">
                 <!-- 折线图 -->
+                <div style="height: 280px;" ref="echarts1"></div>
             </el-card>
             <div class="graph">
                 <el-card style="height: 260px;"></el-card>
@@ -47,6 +48,8 @@
 
 <script>
 import {getData} from '../api';
+import * as echarts from 'echarts'; 
+
 export default {
     name: '',
     data() {
@@ -101,7 +104,34 @@ export default {
         getData().then(res=>{
             const tableData = res.data.data.tableData; 
             this.tableData = tableData
+
+
+            const echarts1 = echarts.init(this.$refs.echarts1) 
+            
+            let option1 = {yAxis:{}}
+            const {orderData} = res.data.data
+            const xAxis = Object.keys(orderData.data[0])
+            option1.xAxis = {
+                data:xAxis
+            }
+        
+            option1.legend = {
+                data:xAxis
+            }
+            option1.series = []
+            xAxis.forEach(key=>{
+                option1.series.push({
+                    name:key,
+                    data:orderData.data.map(item=>item[key]),
+                    type:'line',
+                })
+            })
+            echarts1.setOption(option1)  
         })
+
+        
+
+
     }
 }
 </script>
