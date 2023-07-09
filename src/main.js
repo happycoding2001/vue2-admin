@@ -6,6 +6,7 @@ import store from './store'
 // import {Row,Button} from 'element-ui';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import './api/mock'
 
 // Vue.use(Row);
 // Vue.use(Button);
