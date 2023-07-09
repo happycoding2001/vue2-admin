@@ -39,7 +39,7 @@
 </template>
 
 <script>
-// Home -> home 随便写点注释，不然提交没反应
+import {getData} from '../api';
 export default {
     name: '',
     data() {
@@ -125,6 +125,11 @@ export default {
                 },
             ],
         }
+    },
+    mounted(){
+        getData().then(data=>{
+            console.log(data)
+        })
     }
 }
 </script>
