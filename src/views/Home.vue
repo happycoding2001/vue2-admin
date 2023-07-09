@@ -17,7 +17,7 @@
             </el-card>
             <el-card style="margin-top: 20px;height: 460px;">
                 <el-table :data="tableData" style="width: 100%">
-                    <el-table-column v-for="(val,key) in tableLabel" :prop="key" :label="value">
+                    <el-table-column v-for="(val,key) in tableLabel" :prop="key" :label="val">
                     </el-table-column>
 
                 </el-table>
