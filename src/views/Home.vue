@@ -35,11 +35,15 @@
             </div>
             <el-card style="height: 280px;">
                 <!-- 折线图 -->
-                <div style="height: 280px;" ref="echarts1"></div>
+                <div style="height: 260px;" ref="echarts1"></div>
             </el-card>
             <div class="graph">
-                <el-card style="height: 260px;"></el-card>
-                <el-card style="height: 260px;"></el-card>
+                <el-card style="height: 260px;">
+                    <div style="height: 260px;" ref="echarts2"></div>
+                </el-card>
+                <el-card style="height: 260px;">
+                    <div style="height: 260px;" ref="echarts3"></div>
+                </el-card>
             </div>
         </el-col>
     </el-row>
@@ -47,8 +51,10 @@
 </template>
 
 <script>
-import {getData} from '../api';
-import * as echarts from 'echarts'; 
+import {
+    getData
+} from '../api';
+import * as echarts from 'echarts';
 
 export default {
     name: '',
@@ -100,37 +106,94 @@ export default {
             ],
         }
     },
-    mounted(){
-        getData().then(res=>{
-            const tableData = res.data.data.tableData; 
+    mounted() {
+        getData().then(res => {
+            console.log(res.data.data)
+            const tableData = res.data.data.tableData;
             this.tableData = tableData
 
+            const echarts1 = echarts.init(this.$refs.echarts1)
 
-            const echarts1 = echarts.init(this.$refs.echarts1) 
+            let option1 = {
+                yAxis: {}
+            }
+            const {
+                orderData,
+                userData
+            } = res.data.data
             
-            let option1 = {yAxis:{}}
-            const {orderData} = res.data.data
             const xAxis = Object.keys(orderData.data[0])
             option1.xAxis = {
-                data:xAxis
+                data: xAxis
             }
-        
+
             option1.legend = {
-                data:xAxis
+                data: xAxis
             }
             option1.series = []
-            xAxis.forEach(key=>{
+            xAxis.forEach(key => {
                 option1.series.push({
-                    name:key,
-                    data:orderData.data.map(item=>item[key]),
-                    type:'line',
+                    name: key,
+                    data: orderData.data.map(item => item[key]),
+                    type: 'line',
                 })
             })
-            echarts1.setOption(option1)  
+            echarts1.setOption(option1)
+            console.log(userData.map(item => item.new))
+            // 柱状图
+            const echarts2 = echarts.init(this.$refs.echarts2)
+            let option2 = {
+                    legend: {
+                        // 图例文字颜色
+                        textStyle: {
+                            color: "#333",
+                        },
+                    },
+                    grid: {
+                        left: "20%",
+                    },
+                    // 提示框
+                    tooltip: {
+                        trigger: "axis",
+                    },
+                    xAxis: {
+                        type: "category", // 类目轴
+                        data: userData.map(item => item.date),
+                        axisLine: {
+                            lineStyle: {
+                                color: "#17b3a3",
+                            },
+                        },
+                        axisLabel: {
+                            interval: 0,
+                            color: "#333",
+                        },
+                    },
+                    yAxis: [{
+                        type: "value",
+                        axisLine: {
+                            lineStyle: {
+                                color: "#17b3a3",
+                            },
+                        },
+                    }, ],
+                    color: ["#2ec7c9", "#b6a2de", "#5ab1ef", "#ffb980", "#d87a80", "#8d98b3"],
+                    series: [
+                        {
+                            name:'新增用户',
+                            date:userData.map(item => item.new),
+                            type:'bar'
+                        },
+                        {
+                            name:'活跃用户',
+                            date:userData.map(item => item.active),
+                            type:'bar'
+                        },
+                    ],
+            }
+            console.log(option2)
+            echarts2.setOption(option2)
         })
-
-        
-
 
     }
 }
@@ -177,11 +240,13 @@ export default {
         }
     }
 }
-.num{
+
+.num {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    .icon{
+
+    .icon {
         width: 80px;
         height: 80px;
         font-size: 30px;
@@ -189,35 +254,40 @@ export default {
         line-height: 80px;
         color: #fff;
     }
-    .detail{
+
+    .detail {
         display: flex;
         flex-direction: column;
         justify-content: center;
         margin-left: 15px;
-        
-        .price{
+
+        .price {
             font-size: 30px;
             margin-bottom: 10px;
             line-height: 30px;
             height: 30px;
         }
-        .desc{
+
+        .desc {
             font-size: 14px;
-            color:#999;
+            color: #999;
             text-align: center;
         }
     }
-    .el-card{
+
+    .el-card {
         width: 32%;
         margin-bottom: 20px;
-        
+
     }
 }
-.graph{
+
+.graph {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
-    .el-card{
+
+    .el-card {
         width: 48%;
     }
 }
