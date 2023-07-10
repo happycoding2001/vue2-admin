@@ -90,8 +90,10 @@ export default {
         };
     },
     methods: {
-        clickMenu({path}){
-            this.$router.push({path},()=>{})
+        clickMenu(item){
+            this.$router.push(item.path,()=>{})//这里传第二个参数，是因为最新版的vue-router返回的是promise，同一个链接点第二次会报错
+            this.$store.commit('selectMenu',item)
+
         },
         handleOpen(key, keyPath) {
             console.log(key, keyPath);
