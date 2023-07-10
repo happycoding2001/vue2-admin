@@ -25,5 +25,12 @@ export default {
                 }
             // }
         },
+        removeTag(state,index){
+            
+            // const index = state.tabsList.findIndex(t=>t.name === val.name)  
+            // const curIndex = state.tabsList.findIndex(t=>t.name === this.$route.name) 
+            state.tabsList.splice(index,1)
+            
+        }
     },
 }

@@ -27,12 +27,12 @@ const routes = [
       },
       {
         path: 'page1',
-        name: 'pageOne',
+        name: 'page1',
         component: () => import(/* webpackChunkName: "about" */ '../views/pageOne.vue')
       },
       {
         path: 'page2',
-        name: 'pageTwo',
+        name: 'page2',
         component: () => import(/* webpackChunkName: "about" */ '../views/pageTwo.vue')
       },
     ]
