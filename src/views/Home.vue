@@ -42,7 +42,7 @@
                     <div style="height: 260px;" ref="echarts2"></div>
                 </el-card>
                 <el-card style="height: 260px;">
-                    <div style="height: 260px;" ref="echarts3"></div>
+                    <div style="height: 240px;" ref="echarts3"></div>
                 </el-card>
             </div>
         </el-col>
@@ -119,9 +119,10 @@ export default {
             }
             const {
                 orderData,
-                userData
+                userData,
+                videoData,
             } = res.data.data
-            
+
             const xAxis = Object.keys(orderData.data[0])
             option1.xAxis = {
                 data: xAxis
@@ -143,56 +144,101 @@ export default {
             // 柱状图
             const echarts2 = echarts.init(this.$refs.echarts2)
             let option2 = {
-                    legend: {
-                        // 图例文字颜色
-                        textStyle: {
-                            color: "#333",
+                legend: {
+                    // 图例文字颜色
+                    textStyle: {
+                        color: "#333",
+                    },
+                },
+                grid: {
+                    left: "20%",
+                },
+                // 提示框
+                tooltip: {
+                    trigger: "axis",
+                },
+                xAxis: {
+                    type: "category", // 类目轴
+                    data: userData.map(item => item.date),
+                    axisLine: {
+                        lineStyle: {
+                            color: "#17b3a3",
                         },
                     },
-                    grid: {
-                        left: "20%",
+                    axisLabel: {
+                        interval: 0,
+                        color: "#333",
                     },
-                    // 提示框
-                    tooltip: {
-                        trigger: "axis",
-                    },
-                    xAxis: {
-                        type: "category", // 类目轴
-                        data: userData.map(item => item.date),
-                        axisLine: {
-                            lineStyle: {
-                                color: "#17b3a3",
-                            },
-                        },
-                        axisLabel: {
-                            interval: 0,
-                            color: "#333",
+                },
+                yAxis: [{
+                    type: "value",
+                    axisLine: {
+                        lineStyle: {
+                            color: "#17b3a3",
                         },
                     },
-                    yAxis: [{
-                        type: "value",
-                        axisLine: {
-                            lineStyle: {
-                                color: "#17b3a3",
-                            },
-                        },
-                    }, ],
-                    color: ["#2ec7c9", "#b6a2de", "#5ab1ef", "#ffb980", "#d87a80", "#8d98b3"],
-                    series: [
-                        {
-                            name:'新增用户',
-                            date:userData.map(item => item.new),
-                            type:'bar'
-                        },
-                        {
-                            name:'活跃用户',
-                            date:userData.map(item => item.active),
-                            type:'bar'
-                        },
-                    ],
+                }, ],
+                color: ["#2ec7c9", "#b6a2de", "#5ab1ef", "#ffb980", "#d87a80", "#8d98b3"],
+                series: [{
+                        name: '新增用户',
+                        data: userData.map(item => item.new),
+                        type: 'bar'
+                    },
+                    {
+                        name: '活跃用户',
+                        data: userData.map(item => item.active),
+                        type: 'bar'
+                    },
+                ],
             }
+            
             console.log(option2)
             echarts2.setOption(option2)
+
+            // 饼图
+            const echarts3 = echarts.init(this.$refs.echarts3)
+            let option3 = {
+                legend: {
+                    // 图例文字颜色
+                    textStyle: {
+                        color: "#333",
+                    },
+                },
+                grid: {
+                    left: "20%",
+                },
+                // 提示框
+                tooltip: {
+                    trigger: "axis",
+                },
+                xAxis: {
+                    type: "category", // 类目轴
+                    data: [],
+                    axisLine: {
+                        lineStyle: {
+                            color: "#17b3a3",
+                        },
+                    },
+                    axisLabel: {
+                        interval: 0,
+                        color: "#333",
+                    },
+                },
+                yAxis: [{
+                    type: "value",
+                    axisLine: {
+                        lineStyle: {
+                            color: "#17b3a3",
+                        },
+                    },
+                }, ],
+                color: ["#2ec7c9", "#b6a2de"],
+                series: [{
+                    data:videoData,
+                    type:'pie',
+                }],
+            }
+            echarts3.setOption(option3)
         })
 
     }
