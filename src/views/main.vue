@@ -7,6 +7,7 @@
         <el-header>
             <Header />
         </el-header>
+        <Tag />
         <el-main>
             <router-view></router-view>
         </el-main>
@@ -18,10 +19,12 @@
 <script>
 import Aside from '../components/aside'
 import Header from '../components/header'
+import Tag from '../components/tag'
 export default {
     components:{
         Aside,
         Header,
+        Tag,
     },
     name: '',
     data() {
