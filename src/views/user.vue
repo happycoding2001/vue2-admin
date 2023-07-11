@@ -11,12 +11,12 @@
                 </el-form-item>
                 <el-form-item prop="sex" label="性别">
                     <el-select v-model="form.sex" placeholder="请选择">
-                        <el-option label="男" value="1"></el-option>
-                        <el-option label="女" value="0"></el-option>
+                        <el-option label="男" :value="1"></el-option>
+                        <el-option label="女" :value="0"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item prop="birth" label="出生日期">
-                    <el-date-picker v-model="form.birth" type="date" placeholder="选择日期时间">
+                    <el-date-picker value-format="yyyy-MM-dd" v-model="form.birth" type="date" placeholder="选择日期时间">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item prop="addr" label="地址">
@@ -29,7 +29,7 @@
             </span>
         </el-dialog>
         <div class="manage-head">
-            <el-button @click="dialogVisible=true" type="primary">+ 新增</el-button>
+            <el-button @click="handleAdd" type="primary">+ 新增</el-button>
         </div>
         <el-table :data="tableData" style="width: 100%">
             <el-table-column prop="name" label="姓名">
@@ -58,12 +58,15 @@
 
 <script>
 import {
+    addUser,
+    delUser,
     getUser
 } from '../api'
 export default {
     name: '',
     data() {
         return {
+            modalType: 0, // 0 新增   1 编辑
             dialogVisible: false,
             form: {
                 name: '',
@@ -98,13 +101,49 @@ export default {
         }
     },
     methods: {
-        handleDel(row){},
-        handleEdit(row){},
+        handleAdd() {
+            this.modalType = 0
+            this.dialogVisible = true
+        },
+        handleDel(row) {
+            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                delUser({id:row.id}).then(() => {
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                    this.getList()
+                })
+
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
+        handleEdit(row) {
+            this.modalType = 1
+            this.dialogVisible = true
+            this.form = JSON.parse(JSON.stringify(row)) // row
+        },
         // 提交用户表单
         submit() {
             this.$refs.form.validate((valid) => {
                 if (valid) {
-
+                    if (this.modalType === 0) {
+                        addUser(this.form).then(() => {
+                            this.getList()
+                        })
+                    } else {
+                        editUser(this.form).then(() => {
+                            this.getList()
+                        })
+                    }
                     this.handelClose()
                 }
             })
@@ -115,14 +154,23 @@ export default {
         },
         handelClose() {
             this.$refs.form.resetFields();
+            this.form = {
+                name: '',
+                age: '',
+                sex: '',
+                birth: '',
+                addr: '',
+            }
             this.dialogVisible = false
+        },
+        getList() {
+            getUser().then(res => {
+                this.tableData = res.data.list
+            })
         },
     },
     mounted() {
-        getUser().then(res => {
-
-            this.tableData = res.data.list
-        })
+        this.getList()
     },
 }
 </script>
