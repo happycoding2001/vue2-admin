@@ -29,32 +29,43 @@
     </el-dialog>
     <div class="manage-header">
         <el-button @click="handleAdd" type="primary">+ 新增</el-button>
+        <el-form :inline="true" :model="userForm">
+            <el-form-item >
+                <el-input placeholder="请输入名称" v-model="userForm.name"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit">查询</el-button>
+            </el-form-item>
+        </el-form>
     </div>
-    <el-table height="90%" :data="tableData" style="width: 100%">
-        <el-table-column prop="name" label="姓名">
-        </el-table-column>
-        <el-table-column prop="sex" label="性别">
-            <template slot-scope="scope">
-                <span>{{ scope.row.sex === 1 ? '男' : '女' }}</span>
-            </template>
-        </el-table-column>
-        <el-table-column prop="age" label="年龄">
-        </el-table-column>
-        <el-table-column prop="birth" label="出生日期">
-        </el-table-column>
-        <el-table-column prop="addr" label="地址">
-        </el-table-column>
-        <el-table-column prop="edit" label="操作">
-            <template slot-scope="scope">
-                <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-                <el-button size="mini" type="danger" @click="handleDel(scope.row)">删除</el-button>
-            </template>
-        </el-table-column>
-    </el-table>
-    <div>
-        <el-pagination @current-change="handlePageChange" layout="prev, pager, next" :total="total">
-        </el-pagination>
+    <div class="common-table">
+        <el-table stripe height="90%" :data="tableData" style="width: 100%">
+            <el-table-column prop="name" label="姓名">
+            </el-table-column>
+            <el-table-column prop="sex" label="性别">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.sex === 1 ? '男' : '女' }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="age" label="年龄">
+            </el-table-column>
+            <el-table-column prop="birth" label="出生日期">
+            </el-table-column>
+            <el-table-column prop="addr" label="地址">
+            </el-table-column>
+            <el-table-column prop="edit" label="操作">
+                <template slot-scope="scope">
+                    <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+                    <el-button size="mini" type="danger" @click="handleDel(scope.row)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <div class="pager">
+            <el-pagination @current-change="handlePageChange" layout="prev, pager, next" :total="total">
+            </el-pagination>
+        </div>
     </div>
+
 </div>
 </template>
 
@@ -68,11 +79,14 @@ export default {
     name: '',
     data() {
         return {
-            pageData:{
-                pageIndex:1,
-                pageSize:10,
+            userForm: {
+                name: '',
             },
-            total:0,
+            pageData: {
+                pageIndex: 1,
+                pageSize: 10,
+            },
+            total: 0,
             modalType: 0, // 0 新增   1 编辑
             dialogVisible: false,
             form: {
@@ -108,7 +122,7 @@ export default {
         }
     },
     methods: {
-        handlePageChange(val){
+        handlePageChange(val) {
             this.pageData.pageIndex = val
             this.getList()
         },
@@ -177,16 +191,26 @@ export default {
             this.dialogVisible = false
         },
         getList() {
-            let {pageIndex,pageSize} = this.pageData
+            let {
+                pageIndex,
+                pageSize
+            } = this.pageData
             let params = {
-                page:pageIndex,
-                limit:pageSize
+                page: pageIndex,
+                limit: pageSize,
+                ...this.userForm,
             }
             
-            getUser({params}).then(res => {
+
+            getUser({
+                params
+            }).then(res => {
                 this.tableData = res.data.list
                 this.total = res.data.count ? res.data.count : 0
             })
+        },
+        onSubmit(){
+            this.getList()
         },
     },
     mounted() {
@@ -196,5 +220,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.manage {}
+.manage {
+    .common-table {
+        position: relative;
+        height: calc(100% - 62px);
+
+        .pager {
+            position: absolute;
+            bottom: 0;
+            right: 20px;
+        }
+    }
+    .manage-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
 </style>
