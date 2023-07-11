@@ -1,16 +1,20 @@
 <template>
-<div>
-    mall
+<div id="app">
+    <child>
+        <template slot-scope="t">
+            <p >{{t.num}}-{{t.a}}</p>
+        </template>
+    </child>
 </div>
 </template>
 
+  
 <script>
+import child from './child';
 export default {
-    name: '',
-    data() {
-        return {
-
-        }
+    name: 'app',
+    components: {
+        child
     }
 }
 </script>
