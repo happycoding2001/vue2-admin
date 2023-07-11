@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="manage">
+    <div style="height: 90%;" class="manage">
         <el-dialog title="提示" :visible.sync="dialogVisible" width="50%" :before-close="handelClose">
             <el-form :inline="true" ref="form" :rules="rules" :model="form" label-width="80px">
                 <el-form-item prop="name" label="姓名">
@@ -28,10 +28,10 @@
                 <el-button type="primary" @click="submit">确 定</el-button>
             </span>
         </el-dialog>
-        <div class="manage-head">
+        <div class="manage-header">
             <el-button @click="handleAdd" type="primary">+ 新增</el-button>
         </div>
-        <el-table :data="tableData" style="width: 100%">
+        <el-table height="90%" :data="tableData" style="width: 100%">
             <el-table-column prop="name" label="姓名">
             </el-table-column>
             <el-table-column prop="sex" label="性别">
@@ -176,5 +176,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.manage{
+    
+}
 </style>
