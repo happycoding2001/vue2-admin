@@ -32,11 +32,24 @@
             <el-button @click="dialogVisible=true" type="primary">+ 新增</el-button>
         </div>
         <el-table :data="tableData" style="width: 100%">
-            <el-table-column prop="date" label="日期" width="180">
+            <el-table-column prop="name" label="姓名">
             </el-table-column>
-            <el-table-column prop="name" label="姓名" width="180">
+            <el-table-column prop="sex" label="性别">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.sex === 1 ? '男' : '女' }}</span>
+                </template>
             </el-table-column>
-            <el-table-column prop="address" label="地址">
+            <el-table-column prop="age" label="年龄">
+            </el-table-column>
+            <el-table-column prop="birth" label="出生日期">
+            </el-table-column>
+            <el-table-column prop="addr" label="地址">
+            </el-table-column>
+            <el-table-column prop="edit" label="操作">
+                <template slot-scope="scope">
+                    <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+                    <el-button size="mini" type="danger" @click="handleDel(scope.row)">删除</el-button>
+                </template>
             </el-table-column>
         </el-table>
     </div>
@@ -44,7 +57,9 @@
 </template>
 
 <script>
-import {getUser} from '../api'
+import {
+    getUser
+} from '../api'
 export default {
     name: '',
     data() {
@@ -79,10 +94,12 @@ export default {
                     message: '请输入地址'
                 }, ],
             },
-            tableData:[],
+            tableData: [],
         }
     },
     methods: {
+        handleDel(row){},
+        handleEdit(row){},
         // 提交用户表单
         submit() {
             this.$refs.form.validate((valid) => {
@@ -101,9 +118,9 @@ export default {
             this.dialogVisible = false
         },
     },
-    mounted(){
-        getUser().then(res=>{
-            debugger
+    mounted() {
+        getUser().then(res => {
+
             this.tableData = res.data.list
         })
     },
