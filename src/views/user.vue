@@ -31,12 +31,20 @@
         <div class="manage-head">
             <el-button @click="dialogVisible=true" type="primary">+ 新增</el-button>
         </div>
-
+        <el-table :data="tableData" style="width: 100%">
+            <el-table-column prop="date" label="日期" width="180">
+            </el-table-column>
+            <el-table-column prop="name" label="姓名" width="180">
+            </el-table-column>
+            <el-table-column prop="address" label="地址">
+            </el-table-column>
+        </el-table>
     </div>
 </div>
 </template>
 
 <script>
+import {getUser} from '../api'
 export default {
     name: '',
     data() {
@@ -49,43 +57,55 @@ export default {
                 birth: '',
                 addr: '',
             },
-            rules:{
-                name:[
-                    {required:true,message:'请输入姓名'},
-                ],
-                age:[
-                    {required:true,message:'请输入年龄'},
-                ],
-                sex:[
-                    {required:true,message:'请输入性别'},
-                ],
-                birth:[
-                    {required:true,message:'请输入出生日期'},
-                ],
-                addr:[
-                    {required:true,message:'请输入地址'},
-                ],
+            rules: {
+                name: [{
+                    required: true,
+                    message: '请输入姓名'
+                }, ],
+                age: [{
+                    required: true,
+                    message: '请输入年龄'
+                }, ],
+                sex: [{
+                    required: true,
+                    message: '请输入性别'
+                }, ],
+                birth: [{
+                    required: true,
+                    message: '请输入出生日期'
+                }, ],
+                addr: [{
+                    required: true,
+                    message: '请输入地址'
+                }, ],
             },
+            tableData:[],
         }
     },
-    methods:{
+    methods: {
         // 提交用户表单
-        submit(){
-            this.$refs.form.validate( (valid)=>{
-                if(valid){
+        submit() {
+            this.$refs.form.validate((valid) => {
+                if (valid) {
 
                     this.handelClose()
                 }
-            } )
+            })
         },
-        cancel(){
+        cancel() {
             this.handelClose()
 
         },
-        handelClose(){
+        handelClose() {
             this.$refs.form.resetFields();
             this.dialogVisible = false
         },
+    },
+    mounted(){
+        getUser().then(res=>{
+            debugger
+            this.tableData = res.data.list
+        })
     },
 }
 </script>
