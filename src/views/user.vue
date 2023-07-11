@@ -1,5 +1,5 @@
 <template>
-<div>
+
     <div style="height: 90%;" class="manage">
         <el-dialog title="提示" :visible.sync="dialogVisible" width="50%" :before-close="handelClose">
             <el-form :inline="true" ref="form" :rules="rules" :model="form" label-width="80px">
@@ -53,7 +53,7 @@
             </el-table-column>
         </el-table>
     </div>
-</div>
+
 </template>
 
 <script>
