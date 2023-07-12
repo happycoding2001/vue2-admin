@@ -9,13 +9,15 @@
             <el-input v-model="form.password" type="password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item class="btn-wrap"> 
-            <el-button type="primary">登录</el-button>
+            <el-button @click="sumit" type="primary">登录</el-button>
         </el-form-item>       <!-- <el-form-item>-->
     </el-form>
 </div>
 </template>
 
 <script>
+import Mock from 'mockjs'
+import Cookie from 'js-cookie'
 export default {
     name: '',
     data() {
@@ -33,7 +35,15 @@ export default {
                 ],
             },
         }
-    }
+    },
+    methods:{
+        sumit(){
+            
+            const token = Mock.Random.guid()
+            Cookie.set('token',token)
+            this.$router.push({name:'home'})
+        }
+    },
 }
 </script>
 
