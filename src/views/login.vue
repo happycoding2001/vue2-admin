@@ -49,14 +49,17 @@ export default {
                 if(validate){
                     getMenu(this.form).then( res=>{
                         if(res.data.code === 20000){
-                           Cookie.set('token', data.data.token)
-                           this.$router.push('/home')
+                            Cookie.set('token', res.data.token)
+                            this.$router.push('/home')
+                        }else{
+                            this.$message.error('用户名或密码错误')
                         }
                     } )
                 }
             })
             
-        }
+        },
+
     },
 }
 </script>
