@@ -2,10 +2,11 @@
 <div>
     <el-form label-width="70px" :inline="true" class="login-container" ref="form" :rules="rules" :model="form" >
         <h3 class="login-title">系统登录</h3>
-        <el-form-item label="用户名" prop="username">
+        <!-- 是prop，不是props，prop要写在el-form-item里 -->
+        <el-form-item label="用户名" prop="username" >
             <el-input v-model="form.username" placeholder="请输入账号"></el-input>
         </el-form-item>
-        <el-form-item label="密码" props="password">
+        <el-form-item label="密码" prop="password">
             <el-input v-model="form.password"  type="password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item class="btn-wrap"> 
