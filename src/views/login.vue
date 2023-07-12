@@ -8,9 +8,9 @@
         <el-form-item label="密码">
             <el-input v-model="form.password" type="password" placeholder="请输入密码"></el-input>
         </el-form-item>
-        <div class="btn-wrap"> 
+        <el-form-item class="btn-wrap"> 
             <el-button type="primary">登录</el-button>
-        </div>       
+        </el-form-item>       <!-- <el-form-item>-->
     </el-form>
 </div>
 </template>
@@ -56,7 +56,14 @@ export default {
         color:#505448;
     }
     .btn-wrap{
-        text-align: center;
+        display: flex;
+        flex-direction:column;
+        align-items: center;
+        /deep/.el-form-item__content{
+            // text-align: center;
+            
+            // align-items: center;
+        }
     }
 
 }
