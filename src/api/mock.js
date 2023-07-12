@@ -1,6 +1,7 @@
 import Mock from 'mockjs'
 import homeApi from '../api/mockServerData/home'
 import user from '../api/mockServerData/user'
+import permission from '../api/mockServerData/permission'
 
 // 首页的数据
 Mock.mock('/api/home/getData',homeApi.getStatisticalData)
@@ -10,4 +11,7 @@ Mock.mock('/api/user/add','post',user.createUser)
 Mock.mock('/api/user/edit','post',user.updateUser)
 Mock.mock('/api/user/del','post',user.deleteUser)
 Mock.mock(/api\/user\/getUser/,user.getUserList)
+
+// 权限
+Mock.mock(/api\/permission\/getMenu/,'post',permission.getMenu)
 
