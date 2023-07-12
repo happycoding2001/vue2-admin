@@ -1,3 +1,5 @@
+import Cookies from "js-cookie"
+
 export default {
     state:{
         isCollapse:false, 
@@ -9,6 +11,9 @@ export default {
                 icon: 's-home',
                 url: 'Home/Home'
             },
+        ],
+        menu:[
+
         ],
     },
     mutations:{
@@ -31,6 +36,33 @@ export default {
             // const curIndex = state.tabsList.findIndex(t=>t.name === this.$route.name) 
             state.tabsList.splice(index,1)
             
+        },
+        setMenu(state,val){
+            state.menu = val
+            Cookies.set('menu',JSON.stringify(val))
+        },
+        addMenu(state,router){
+            if(Cookies.get('menu')){
+                const menu = JSON.parse(Cookies.get('menu'))
+                state.menu = menu
+                const menuArray = []
+                menu.forEach(item=>{
+                    if(item.children){
+                        item.children = item.children.map(item=>{
+                            item.component = () => (`../views/$(item.url)`)
+                            return item
+                        })
+                        menuArray.push(...item.children)
+                    }else{
+                        item.component = ()=>import(`../views/${item.url}`)
+                        menuArray.push(item)
+                    }
+                })
+                debugger
+                menuArray.forEach(item=>{
+                    router.addRoute('main',item)
+                })
+            }
         }
     },
 }

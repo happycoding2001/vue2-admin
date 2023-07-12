@@ -49,7 +49,11 @@ export default {
                 if(validate){
                     getMenu(this.form).then( res=>{
                         if(res.data.code === 20000){
-                            Cookie.set('token', res.data.token)
+                            
+                            Cookie.set('token', res.data.data.token)
+                            this.$store.commit('setMenu',res.data.data.menu)
+                            this.$store.commit('addMenu',this.$router)
+                            
                             this.$router.push('/home')
                         }else{
                             this.$message.error('用户名或密码错误')
