@@ -13,31 +13,35 @@ const routes = [
       {
         path: 'home',
         name: 'home',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
+        component: () => import(/* webpackChunkName: "Home" */ '../views/Home.vue')
       },
       {
         path: 'user',
         name: 'user',
-        component: () => import(/* webpackChunkName: "about" */ '../views/user.vue')
+        component: () => import(/* webpackChunkName: "user" */ '../views/user.vue')
       },
       {
         path: 'mall',
         name: 'mall',
-        component: () => import(/* webpackChunkName: "about" */ '../views/mall.vue')
+        component: () => import(/* webpackChunkName: "mall" */ '../views/mall.vue')
       },
       {
         path: 'page1',
         name: 'page1',
-        component: () => import(/* webpackChunkName: "about" */ '../views/pageOne.vue')
+        component: () => import(/* webpackChunkName: "pageOne" */ '../views/pageOne.vue')
       },
       {
         path: 'page2',
         name: 'page2',
-        component: () => import(/* webpackChunkName: "about" */ '../views/pageTwo.vue')
+        component: () => import(/* webpackChunkName: "pageTwo" */ '../views/pageTwo.vue')
       },
     ]
   },
-  
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/login.vue'),
+  },
 
 
 
