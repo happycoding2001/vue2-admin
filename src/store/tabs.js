@@ -49,7 +49,7 @@ export default {
                 menu.forEach(item=>{
                     if(item.children){
                         item.children = item.children.map(item=>{
-                            item.component = () => (`../views/$(item.url)`)
+                            item.component = () =>import(`../views/${item.url}`)
                             return item
                         })
                         menuArray.push(...item.children)
@@ -58,7 +58,7 @@ export default {
                         menuArray.push(item)
                     }
                 })
-                debugger
+                
                 menuArray.forEach(item=>{
                     router.addRoute('main',item)
                 })
